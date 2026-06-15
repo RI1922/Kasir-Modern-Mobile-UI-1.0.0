@@ -11,13 +11,13 @@ import './assets/theme.css'
 import './assets/responsive.css'
 import './assets/mobile.css'
 
-import { seedTest } from './utils/testDb'
+//import { seedTest } from './utils/testDb'
 
 registerSW({
     immediate:true
 })
 
-seedTest()
+//seedTest()
 
 const app = createApp(App)
 

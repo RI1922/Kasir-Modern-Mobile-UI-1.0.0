@@ -81,9 +81,7 @@
 
                 </div>
 
-            </div>
-
-            <div class="settings-card">
+                <div class="settings-card">
 
     <h2>🔐 Akun Pengguna</h2>
 
@@ -148,6 +146,8 @@
 
 </div>
 
+</div>
+
 
 
             <!-- KANAN -->
@@ -189,7 +189,7 @@
                             <span>Versi</span>
 
                             <strong>
-                                1.0.0
+                                1.1.0
                             </strong>
 
                         </div>
@@ -282,9 +282,13 @@
 
 import {
     ref,
-    computed,
     onMounted
 } from 'vue'
+
+import {
+    backupService
+}
+from '../services/backupService'
 
 import { productService }
 from '../services/productService'
@@ -324,6 +328,10 @@ const transactions = ref([])
 
 const restoreFile = ref(null)
 
+const router = useRouter()
+
+const currentUser = ref(null)
+
 const lastBackup = ref(
 
     localStorage.getItem(
@@ -337,7 +345,19 @@ const openRestoreFile = () => {
     restoreFile.value.click()
 
 }
+
+
 onMounted(async () => {
+
+    const userData = JSON.parse(
+
+        localStorage.getItem(
+            'user_account'
+        )
+
+    )
+
+    currentUser.value = userData
 
     const saved = localStorage.getItem(
         'store_settings'
@@ -457,243 +477,43 @@ const saveUser = () => {
 
 const backupData = async () => {
 
-    const data = {
+    const success =
+        await backupService.backup()
 
-    settings:
-        settings.value,
+    if(success){
 
-    products:
-        await productService.getAll(),
-
-    transactions:
-        await transactionService.getAll(),
-
-    categories:
-
-        JSON.parse(
+        lastBackup.value =
 
             localStorage.getItem(
-                'categories'
-            ) || '[]'
+                'last_backup'
+            )
 
-        ),
-
-    brands:
-
-        JSON.parse(
-
-            localStorage.getItem(
-                'brands'
-            ) || '[]'
-
+        alert(
+            'Backup berhasil dibuat'
         )
 
-}
-
-    const blob = new Blob(
-
-        [
-
-            JSON.stringify(
-                data,
-                null,
-                2
-            )
-
-        ],
-
-        {
-
-            type:
-            'application/json'
-
-        }
-
-    )
-
-    const link =
-        document.createElement('a')
-
-    link.href =
-        URL.createObjectURL(blob)
-
-    link.download =
-        `backup-kasir-${Date.now()}.json`
-
-    link.click()
-
-}
-
-localStorage.setItem(
-
-    'last_backup',
-
-    new Date().toLocaleString(
-        'id-ID'
-    )
-
-)
-
-lastBackup.value =
-
-    localStorage.getItem(
-        'last_backup'
-    )
-
-
-const restoreData = (event) => {
-
-    const file = event.target.files[0]
-
-    if(!file){
-
-        return
-
     }
 
-    const reader = new FileReader()
+}
 
-    reader.onload = () => {
 
-        try{
+const restoreData = async (event) => {
 
-            const data = JSON.parse(
-                reader.result
-            )
-
-            if(data.settings){
-
-                localStorage.setItem(
-
-                    'store_settings',
-
-                    JSON.stringify(
-                        data.settings
-                    )
-
-                )
-
-            }
-
-            if(data.products){
-
-                localStorage.setItem(
-
-                    'products',
-
-                    JSON.stringify(
-                        data.products
-                    )
-
-                )
-
-            }
-
-            if(data.transactions){
-
-                localStorage.setItem(
-
-                    'transactions',
-
-                    JSON.stringify(
-                        data.transactions
-                    )
-
-                )
-
-            }
-
-            if(data.categories){
-
-                localStorage.setItem(
-
-                    'categories',
-
-                    JSON.stringify(
-                        data.categories
-                    )
-
-                )
-
-            }
-
-            if(data.brands){
-
-                localStorage.setItem(
-
-                    'brands',
-
-                    JSON.stringify(
-                        data.brands
-                    )
-
-                )
-
-            }
-
-            alert(
-                'Restore berhasil'
-            )
-
-            location.reload()
-
-        }
-
-        catch(error){
-
-            alert(
-                'File backup tidak valid'
-            )
-
-        }
-
-    }
-
-    reader.readAsText(file)
+    await backupService.restore(
+        event
+    )
 
 }
 
-const resetData = () => {
+const resetData = async () => {
 
-    const confirmReset = confirm(
-
-        'Yakin ingin menghapus semua data?'
-
-    )
-
-    if(!confirmReset){
-
-        return
-
-    }
-
-    localStorage.removeItem(
-        'products'
-    )
-
-    localStorage.removeItem(
-        'categories'
-    )
-
-    localStorage.removeItem(
-        'brands'
-    )
-
-    localStorage.removeItem(
-        'transactions'
-    )
-
-    localStorage.removeItem(
-    'store_settings'
-)
-
-    alert(
-        'Semua data berhasil dihapus'
-    )
-
-    location.reload()
+    await backupService.reset()
 
 }
+
+
+
+
 
 const handleLogo = (event) => {
 
@@ -713,7 +533,7 @@ const handleLogo = (event) => {
 
 }
 
-const router = useRouter()
+
 
 const logout = () => {
 
@@ -738,22 +558,6 @@ const logout = () => {
     router.push('/login')
 
 }
-
-const currentUser = ref(null)
-
-onMounted(() => {
-
-    const user = JSON.parse(
-
-        localStorage.getItem(
-            'user_account'
-        )
-
-    )
-
-    currentUser.value = user
-
-})
 
 </script>
 
@@ -887,12 +691,6 @@ button{
 
 .button-group{
 
-    margin-top:10px;
-
-}
-
-.button-group{
-
     display:flex;
 
     gap:15px;
@@ -936,16 +734,6 @@ button{
     cursor:pointer;
 
     font-weight:600;
-
-}
-
-.info-grid div{
-
-    background:#1f2937;
-
-    padding:18px;
-
-    border-radius:14px;
 
 }
 
@@ -1029,16 +817,6 @@ button{
 }
 
 .left-panel{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:20px;
-
-}
-
-.right-panel{
 
     display:flex;
 
