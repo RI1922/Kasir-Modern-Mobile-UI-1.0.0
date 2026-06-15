@@ -225,6 +225,9 @@ const payment = ref(0)
 const settings =
     settingsService.getSettings()
 
+    console.log('SETTINGS =', settings)
+console.log('STORE NAME =', settings?.storeName)
+
 const loadData = async () => {
 
     products.value =
@@ -385,6 +388,11 @@ const change = computed(() => {
 
 const printReceipt = (data) => {
 
+        console.log(
+        'Settings:',
+        settingsService.getSettings()
+    )
+
     const receiptWindow =
         window.open('', '_blank')
 
@@ -495,7 +503,7 @@ h2{
             <div class="store">
 
     <div class="store-name">
-        ${settings.storeName}
+        ${settings?.storeName || 'Kasir Modern'}
     </div>
 
     <div>
@@ -582,7 +590,7 @@ ${data.items.map((item,index) => `
 
     <br>
 
-    Selamat Berbelanja di ${settings.storeName}
+    Selamat Berbelanja di ${settings?.storeName || 'Kasir Modern'}
 
 </div>
 

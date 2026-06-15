@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "chart.js": "^4.5.1",
     "dexie": "^4.4.3",
     "pinia": "^3.0.3",

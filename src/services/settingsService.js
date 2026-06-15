@@ -8,7 +8,15 @@ export const settingsService = {
 
         return data
             ? JSON.parse(data)
-            : {}
+            : {
+
+                storeName:'Kasir Modern',
+                address:'',
+                phone:'',
+                owner:'',
+                logo:''
+
+            }
 
     }
 
