@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { registerSW } from 'virtual:pwa-register'
 import { inject } from '@vercel/analytics'
+import { injectSpeedInsights } from '@vercel/speed-insights'
 
 import App from './App.vue'
 import router from './router'
@@ -26,3 +27,4 @@ app.use(router)
 app.mount('#app')
 
 inject()
+injectSpeedInsights()
