@@ -18,10 +18,6 @@
 
     <h3>{{ storeName }}</h3>
 
-    <small>
-    {{ owner || 'Pemilik Toko' }}
-</small>
-
 </div>
 
     </div>
@@ -63,13 +59,6 @@ onMounted(() => {
 
         storeName.value =
             settings.storeName
-
-    }
-
-        if(settings.owner){
-
-        owner.value =
-            settings.owner
 
     }
 
@@ -132,90 +121,93 @@ onMounted(() => {
 @media(max-width:767px){
 
     .header{
+    position:sticky;
+    top:0;
+    z-index:9999;
 
-        position:sticky;
-        top:0;
-        z-index:9999;
+    background:#050816;
 
-        background:#050816;
+    padding:8px 12px;
 
-        padding:12px 16px;
+    min-height:42px;
 
-        min-height:70px;
+    margin-bottom:10px;
+}
 
-        margin-bottom:16px;
-    }
+.header-left{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
 
-    .header-left{
+.menu-btn{
 
-        display:flex;
+    width:44px;
+    height:44px;
 
-        align-items:center;
+    min-width:44px;
+    min-height:44px;
 
-        justify-content:flex-start;
+    font-size:24px;
 
-        gap:12px;
+    border:none;
 
-        width:100%;
+    border-radius:10px;
 
-        min-height:52px;
-    }
+    background:rgba(0, 0, 0, 0.14);
 
-    .menu-btn{
+    color:white;
 
-        width:48px;
-        height:48px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-        min-width:48px;
-        min-height:48px;
-
-        font-size:28px;
-
-        border:none;
-        border-radius:14px;
-
-        background:rgba(0,0,0,.32);
-
-        color:white;
-
-        display:flex;
-        align-items:center;
-        justify-content:center;
-
-        flex-shrink:0;
-    }
-
-    .mobile-store{
-
-        margin-left:0;
-
-        flex:1;
-    }
-
-    .mobile-store h3{
-
-        margin:0;
-
-        color:white;
-
-        font-size:18px;
-
-        font-weight:700;
-
-        line-height:1.2;
-    }
-
-    .mobile-store small{
-
-        color:#94a3b8;
-
-        font-size:13px;
-    }
+    flex-shrink:0;
+}
 
 }
 
 
+@media (max-width:767px) and (orientation:landscape){
 
+    .header{
+
+        padding:6px 12px;
+
+        min-height:48px;
+
+        margin-bottom:8px;
+    }
+
+    .header-left{
+
+        gap:8px;
+    }
+
+    .menu-btn{
+
+        width:38px;
+        height:38px;
+
+        min-width:38px;
+        min-height:38px;
+
+        font-size:20px;
+
+        border-radius:8px;
+    }
+
+    .mobile-store h3{
+
+        font-size:14px;
+    }
+
+    .mobile-store small{
+
+        font-size:10px;
+    }
+
+}
 
 
 
