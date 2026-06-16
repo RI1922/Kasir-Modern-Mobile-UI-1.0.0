@@ -129,7 +129,7 @@ onMounted(() => {
 
 /* HP */
 
-@media(max-width:768px){
+@media(max-width:767px){
 
     .menu-btn{
 
@@ -173,7 +173,7 @@ onMounted(() => {
 
         color:white;
 
-        font-size:18px;
+        font-size:14px;
 
         font-weight:700;
 
@@ -193,7 +193,7 @@ onMounted(() => {
 
         color:#94a3b8;
 
-        font-size:13px;
+        font-size:11px;
 
         padding-left:2px;
     }
@@ -248,14 +248,80 @@ onMounted(() => {
 
 }
 
-/* TABLET & DESKTOP */
+/* TABLET PORTRAIT */
 
-@media(min-width:769px){
+@media (min-width:768px) and (max-width:1024px) and (orientation:portrait){
 
     .header{
 
-        display:none;
+        position:sticky;
+        top:0;
+        z-index:9999;
 
+        background:#050816;
+
+        padding:24px 28px;
+
+        min-height:120px;
+
+        margin-bottom:20px;
+    }
+
+    .header-left{
+
+        display:flex;
+        align-items:center;
+        width:100%;
+    }
+
+    .menu-btn{
+
+        display:flex;
+
+        align-items:center;
+        justify-content:center;
+
+        width:72px;
+        height:72px;
+
+        font-size:36px;
+
+        border:none;
+        border-radius:18px;
+
+        background:rgba(0, 0, 0, 0.32);
+        color:white;
+
+        flex-shrink:0;
+    }
+
+    .mobile-store{
+
+        margin-left:20px;
+    }
+
+    .mobile-store h3{
+
+        margin:0;
+
+        color:white;
+
+        font-size:32px;
+
+        font-weight:700;
+
+        line-height:1.2;
+    }
+
+    .mobile-store small{
+
+        display:block;
+
+        margin-top:4px;
+
+        color:#94a3b8;
+
+        font-size:20px;
     }
 
 }

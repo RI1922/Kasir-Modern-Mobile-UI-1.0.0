@@ -4,14 +4,16 @@
 
 <div class="layout">
 
-    <Sidebar
-        :mobileMenu="mobileMenu"
-        @close="mobileMenu = false"
-    />
+<Sidebar
+    v-if="!useMobileSidebar || mobileMenu"
+    :mobileMenu="mobileMenu"
+    @close="mobileMenu = false"
+/>
 
     <main class="content">
 
 <AppHeader
+    v-if="useMobileSidebar"
     :mobileMenu="mobileMenu"
     @toggle-menu="
         mobileMenu = !mobileMenu
@@ -30,15 +32,66 @@
 
 <script setup>
 
-import { ref } from 'vue'
+import {
+    ref,
+    computed,
+    onMounted,
+    onUnmounted
+} from 'vue'
 
 import Sidebar from '../components/Sidebar.vue'
 import AppHeader from '../components/AppHeader.vue'
 
 const mobileMenu = ref(false)
 
+const screenWidth = ref(window.innerWidth)
+const screenHeight = ref(window.innerHeight)
 
+const updateSize = () => {
 
+    screenWidth.value = window.innerWidth
+    screenHeight.value = window.innerHeight
+
+}
+
+onMounted(() => {
+
+    window.addEventListener(
+        'resize',
+        updateSize
+    )
+
+})
+
+onUnmounted(() => {
+
+    window.removeEventListener(
+        'resize',
+        updateSize
+    )
+
+})
+
+const useMobileSidebar = computed(() => {
+
+    const isTabletPortrait =
+        screenWidth.value <= 1024 &&
+        screenHeight.value > screenWidth.value
+
+    const isPhoneLandscape =
+        screenWidth.value <= 1024 &&
+        screenHeight.value <= 500
+
+    const isPhone =
+        screenWidth.value < 768
+
+    return (
+        isPhone ||
+        isPhoneLandscape ||
+        isTabletPortrait
+    )
+
+})
 
 </script>
 
