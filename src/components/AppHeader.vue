@@ -240,6 +240,8 @@ onMounted(() => {
     min-width:48px;
     min-height:48px;
 
+    background:rgba(0, 0, 0, 0.32);
+
     font-size:28px;
 
     border-radius:10px;
