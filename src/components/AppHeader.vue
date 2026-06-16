@@ -8,7 +8,6 @@
     <div class="header-left">
 
 <button
-    v-if="!mobileMenu"
     class="menu-btn"
     @click="$emit('toggle-menu')"
 >
@@ -107,9 +106,15 @@ onMounted(() => {
 
 }
 
-.menu-btn{
+.header-left{
 
-    display:none;
+    display:flex;
+
+    align-items:center;
+
+    width:100%;
+
+    min-height:52px;
 
 }
 
