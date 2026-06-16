@@ -72,7 +72,12 @@ onUnmounted(() => {
 
 const useMobileSidebar = computed(() => {
 
-    return screenWidth.value < 768
+    const shortestSide = Math.min(
+        screenWidth.value,
+        screenHeight.value
+    )
+
+    return shortestSide < 600
 
 })
 
