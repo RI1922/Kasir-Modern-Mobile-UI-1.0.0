@@ -178,7 +178,7 @@ onMounted(() => {
 
         color:white;
 
-        font-size:14px;
+        font-size:18px;
 
         font-weight:700;
 
@@ -198,7 +198,7 @@ onMounted(() => {
 
         color:#94a3b8;
 
-        font-size:11px;
+        font-size:13px;
 
         padding-left:2px;
     }
@@ -231,20 +231,29 @@ onMounted(() => {
 
     .menu-btn{
 
-        position:flex;
+    width:60px;
+    height:60px;
 
-        top:20px;
-        left:26px;
+    min-width:60px;
+    min-height:60px;
 
-        width:34px;
-        height:34px;
+    font-size:34px;
 
-        z-index:900;
+    border:none;
+    border-radius:14px;
 
-        display:flex;
-        align-items:center;
-        justify-content:center;
-    }
+    background:rgba(0,0,0,.32);
+
+    color:white;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    flex-shrink:0;
+
+    z-index:900;
+}
 
     .mobile-store{
 
