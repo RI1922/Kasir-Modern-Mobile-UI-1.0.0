@@ -208,7 +208,7 @@ onMounted(() => {
 }
 
     .mobile-store{
-    margin-left:12px;
+    margin-left:0;
 }
 
 }
@@ -296,7 +296,7 @@ onMounted(() => {
 
     .mobile-store{
 
-        margin-left:20px;
+        margin-left:10px;
     }
 
     .mobile-store h3{
