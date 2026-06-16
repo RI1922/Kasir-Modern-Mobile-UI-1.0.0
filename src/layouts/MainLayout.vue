@@ -81,6 +81,7 @@ const useMobileSidebar = computed(() => {
     const isPhoneLandscape =
         screenWidth.value <= 1024 &&
         screenHeight.value <= 500
+        
 
     const isPhone =
         screenWidth.value < 768
@@ -89,9 +90,12 @@ const useMobileSidebar = computed(() => {
         isPhone ||
         isPhoneLandscape ||
         isTabletPortrait
+
+        
     )
 
 })
+
 
 </script>
 
