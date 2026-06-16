@@ -233,19 +233,35 @@ onMounted(() => {
 
 @media (max-height:500px){
 
-.menu-btn{
-    width:48px;
-    height:48px;
+@media (max-height:500px){
 
-    min-width:48px;
-    min-height:48px;
+    .menu-btn{
 
-    background:rgba(0, 0, 0, 0.32);
-    color:white;
+        width:48px;
+        height:48px;
 
-    font-size:28px;
+        min-width:48px;
+        min-height:48px;
 
-    border-radius:10px;
+        font-size:28px;
+
+        border:none;
+
+        border-radius:14px;
+
+        background:rgba(0,0,0,.32);
+
+        color:white;
+
+        display:flex;
+        align-items:center;
+        justify-content:center;
+
+        box-shadow:
+            inset 0 0 0 2px rgba(255,255,255,.08);
+
+    }
+
 }
 }
 
