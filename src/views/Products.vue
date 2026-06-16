@@ -50,10 +50,6 @@
             </p>
 
             <p>
-                🏷 {{ item.brandName }}
-            </p>
-
-            <p>
                 💰 Rp {{ Number(item.sellingPrice).toLocaleString('id-ID') }}
             </p>
 
@@ -96,7 +92,6 @@
                     <th width="120">Gambar</th>
                     <th>Nama</th>
                     <th>Kategori</th>
-                    <th>Brand</th>
                     <th>Harga Jual</th>
                     <th>Stok</th>
                     <th>Aksi</th>
@@ -126,8 +121,6 @@
 <td>{{ item.name }}</td>
 
                     <td>{{ item.categoryName }}</td>
-
-                    <td>{{ item.brandName }}</td>
 
                     <td>
                         Rp {{ item.sellingPrice }}
@@ -171,9 +164,9 @@
     <div class="modal-content">
 
 
-        <h2>
-            Tambah Produk
-        </h2>
+<h2>
+    {{ editMode ? 'Edit Produk' : 'Tambah Produk' }}
+</h2>
 
         <input
             v-model="form.name"
@@ -190,24 +183,6 @@
 
             <option
                 v-for="item in categories"
-                :key="item.id"
-                :value="item.id"
-            >
-                {{ item.name }}
-            </option>
-
-        </select>
-
-        <select
-            v-model="form.brandId"
-        >
-
-            <option value="">
-                Pilih Brand
-            </option>
-
-            <option
-                v-for="item in brands"
                 :key="item.id"
                 :value="item.id"
             >
@@ -234,11 +209,34 @@
             placeholder="Stok"
         >
 
-        <input
+<input
     type="file"
     accept="image/*"
     @change="handleImageUpload"
 >
+
+
+
+
+<div
+    v-if="form.image"
+    class="image-preview-wrapper"
+>
+
+    <img
+        :src="form.image"
+        class="image-preview"
+    >
+
+    <button
+        type="button"
+        class="image-remove-btn"
+        @click="removeImage"
+    >
+        ✕
+    </button>
+
+</div>
 
         <div class="modal-actions">
 
@@ -282,16 +280,11 @@ from '../services/productService'
 import { categoryService }
 from '../services/categoryService'
 
-import { brandService }
-from '../services/brandService'
-
 const search = ref('')
 
 const products = ref([])
 
 const categories = ref([])
-
-const brands = ref([])
 
 const showModal = ref(false)
 
@@ -304,8 +297,6 @@ const form = ref({
     name:'',
 
     categoryId:'',
-
-    brandId:'',
 
     purchasePrice:0,
 
@@ -322,9 +313,6 @@ const loadData = async () => {
     categories.value =
         await categoryService.getAll()
 
-    brands.value =
-        await brandService.getAll()
-
     const data =
         await productService.getAll()
 
@@ -335,20 +323,12 @@ const loadData = async () => {
                 c => c.id == product.categoryId
             )
 
-        const brand =
-            brands.value.find(
-                b => b.id == product.brandId
-            )
-
         return {
 
             ...product,
 
             categoryName:
                 category?.name || '-',
-
-            brandName:
-                brand?.name || '-'
 
         }
 
@@ -384,8 +364,6 @@ const openCreate = () => {
 
         categoryId:'',
 
-        brandId:'',
-
         purchasePrice:'',
 
         sellingPrice:'',
@@ -412,8 +390,6 @@ const openEdit = (item) => {
 
         categoryId:item.categoryId,
 
-        brandId:item.brandId,
-
         purchasePrice:item.purchasePrice,
 
         sellingPrice:item.sellingPrice,
@@ -439,6 +415,12 @@ const remove = async(id) => {
     await productService.delete(id)
 
     await loadData()
+
+}
+
+const removeImage = () => {
+
+    form.value.image = ''
 
 }
 
@@ -886,7 +868,7 @@ tr{
 
     
 
-.table-card{
+ .table-card{
         display:none;
     }
 
@@ -903,6 +885,74 @@ tr{
         gap:12px;
 
     }
+}
+
+.image-preview-wrapper{
+
+    position:relative;
+
+    display:inline-block;
+
+    width:120px;
+
+    height:120px;
+
+    margin-top:12px;
+
+}
+
+.image-preview{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    border-radius:12px;
+
+    border:2px solid #1f2937;
+
+    display:block;
+
+}
+
+.image-remove-btn{
+
+    position:absolute;
+
+    top:-10px;
+
+    right:-10px;
+
+    width:28px;
+
+    height:28px;
+
+    border:none;
+
+    border-radius:100%;
+
+    background:rgba(255, 255, 255, 0.13);
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    padding:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    z-index:10;
+
 }
 
 </style>

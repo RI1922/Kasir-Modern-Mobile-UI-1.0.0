@@ -1,15 +1,19 @@
 <template>
 
-<header class="header">
+<header
+    v-if="!mobileMenu"
+    class="header"
+>
 
     <div class="header-left">
 
-        <button
-            class="menu-btn"
-            @click="$emit('toggle-menu')"
-        >
-            ☰
-        </button>
+<button
+    v-if="!mobileMenu"
+    class="menu-btn"
+    @click="$emit('toggle-menu')"
+>
+    ☰
+</button>
 
         <div class="mobile-store">
 
@@ -33,6 +37,12 @@ import {
     ref,
     onMounted
 } from 'vue'
+
+defineProps({
+
+    mobileMenu:Boolean
+
+})
 
 import {
     settingsService
@@ -91,11 +101,9 @@ onMounted(() => {
 
     align-items:center;
 
-    gap:12px;
-
     width:100%;
 
-    min-width:0;
+    min-height:52px;
 
 }
 
@@ -128,59 +136,115 @@ onMounted(() => {
         display:flex;
 
         align-items:center;
-
         justify-content:center;
 
-        width:48px;
+        position:flex;
+        top:8px;
+        left:2px;
 
-        height:48px;
+        width:74px;
+        height:74px;
 
         border:none;
+        border-radius:8px;
 
-        border-radius:14px;
-
-        background:#111827;
-
+        background:rgba(0, 0, 0, 0.32);
         color:white;
 
-        font-size:20px;
+        font-size:32px;
 
         cursor:pointer;
 
-        flex-shrink:0;
+        z-index:900;
 
         box-shadow:
-            0 4px 12px rgba(0,0,0,.25);
+            0 6px 20px rgba(31, 31, 31, 0);
 
     }
 
-.mobile-store h3{
+    .mobile-store{
 
-    margin:0;
+        padding-left:62px;
+    }
 
-    color:white;
+    .mobile-store h3{
 
-    font-size:18px;
+        margin:0;
 
-    font-weight:700;
+        color:white;
 
-    line-height:1.2;
+        font-size:18px;
 
-    white-space:nowrap;
+        font-weight:700;
 
-    overflow:hidden;
+        line-height:1.2;
 
-    text-overflow:ellipsis;
+        white-space:nowrap;
+
+        overflow:hidden;
+
+        text-overflow:ellipsis;
+
+        padding-left:2px;
+
+    }
+
+    .mobile-store small{
+
+        color:#94a3b8;
+
+        font-size:13px;
+
+        padding-left:2px;
+    }
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:9999;
+
+    background:#050816;
+
+    padding:6px 0;
+
+    margin-bottom:16px;
+
+    min-height:60px;
+}
+
+.header-left{
+
+    display:flex;
+
+    align-items:center;
+
+    width:100%;
+
+    min-height:52px;
 
 }
 
-.mobile-store small{
+    .menu-btn{
 
-    color:#94a3b8;
+        position:flex;
 
-    font-size:11px;
+        top:20px;
+        left:26px;
 
-}
+        width:34px;
+        height:34px;
+
+        z-index:900;
+
+        display:flex;
+        align-items:center;
+        justify-content:center;
+    }
+
+    .mobile-store{
+
+        padding-left:1px;
+    }
 
 }
 

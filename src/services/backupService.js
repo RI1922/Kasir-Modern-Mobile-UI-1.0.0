@@ -16,9 +16,6 @@ export const backupService = {
                 categories:
                     await db.categories.toArray(),
 
-                brands:
-                    await db.brands.toArray(),
-
                 transactions:
                     await db.transactions.toArray(),
 
@@ -140,8 +137,6 @@ console.log(
 
                 await db.categories.clear()
 
-                await db.brands.clear()
-
                 await db.transactions.clear()
 
                 if(
@@ -160,16 +155,6 @@ console.log(
 
                     await db.categories.bulkPut(
     data.categories
-)
-
-                }
-
-                if(
-                    data.brands?.length
-                ){
-
-                    await db.brands.bulkPut(
-    data.brands
 )
 
                 }
@@ -241,8 +226,6 @@ showError(
             await db.products.clear()
 
             await db.categories.clear()
-
-            await db.brands.clear()
 
             await db.transactions.clear()
 

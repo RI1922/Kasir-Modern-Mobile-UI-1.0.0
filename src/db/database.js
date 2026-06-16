@@ -6,12 +6,9 @@ db.version(1).stores({
 
     categories: '++id,name,createdAt',
 
-    brands: '++id,name,createdAt',
-
     products: `
         ++id,
         categoryId,
-        brandId,
         name,
         barcode,
         purchasePrice,

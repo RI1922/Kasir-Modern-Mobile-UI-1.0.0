@@ -200,9 +200,6 @@ from '../services/productService'
 import { categoryService }
 from '../services/categoryService'
 
-import { brandService }
-from '../services/brandService'
-
 import { transactionService }
 from '../services/transactionService'
 
@@ -214,8 +211,6 @@ from '../services/settingsService'
 const products = ref([])
 
 const categories = ref([])
-
-const brands = ref([])
 
 const search = ref('')
 
@@ -239,9 +234,6 @@ const loadData = async () => {
     categories.value =
         await categoryService.getAll()
 
-    brands.value =
-        await brandService.getAll()
-
 }
 
 onMounted(loadData)
@@ -258,11 +250,6 @@ const filteredProducts = computed(() => {
                 c => c.id === item.categoryId
             )
 
-        const brand =
-            brands.value.find(
-                b => b.id === item.brandId
-            )
-
         return (
 
             item.name
@@ -272,12 +259,6 @@ const filteredProducts = computed(() => {
             ||
 
             category?.name
-                ?.toLowerCase()
-                .includes(keyword)
-
-            ||
-
-            brand?.name
                 ?.toLowerCase()
                 .includes(keyword)
 

@@ -67,11 +67,27 @@
                         v-model="settings.address"
                     ></textarea>
 
-                    <img
-                        v-if="settings.logo"
-                        :src="settings.logo"
-                        class="logo-preview"
-                    >
+
+
+<div
+    v-if="settings.logo"
+    class="image-preview-wrapper"
+>
+
+    <img
+        :src="settings.logo"
+        class="logo-preview"
+    >
+
+    <button
+        type="button"
+        class="image-remove-btn"
+        @click="removeImage"
+    >
+        ✕
+    </button>
+
+</div>
 
                     <button
                         @click="saveSettings"
@@ -189,7 +205,7 @@
                             <span>Versi</span>
 
                             <strong>
-                                1.1.0
+                                1.2.0
                             </strong>
 
                         </div>
@@ -258,7 +274,7 @@
 
                     <p>
                         Hapus seluruh data produk,
-                        kategori, brand dan transaksi.
+                        kategori dan transaksi.
                     </p>
 
                     <button
@@ -348,6 +364,12 @@ const lastBackup = ref(
 const openRestoreFile = () => {
 
     restoreFile.value.click()
+
+}
+
+const removeImage = () => {
+
+    settings.value.logo = ''
 
 }
 
@@ -1008,6 +1030,75 @@ button{
         position:static;
 
     }
+
+}
+
+.image-preview-wrapper{
+
+    position:relative;
+
+    display:inline-block;
+
+    width:120px;
+
+    height:120px;
+
+    margin-top:5px;      /* sebelumnya 15px */
+    margin-bottom:25px;   /* tambah jarak ke tombol simpan */
+
+}
+
+.logo-preview{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:contain;
+
+    background:#1f2937;
+
+    border-radius:15px;
+
+    padding:10px;
+
+}
+
+.image-remove-btn{
+
+    position:absolute;
+
+    top:8px;
+
+    right:-6px;
+
+    width:22px;
+
+    height:22px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#374151;
+
+    color:white;
+
+    font-size:12px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    padding:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    z-index:10;
 
 }
 

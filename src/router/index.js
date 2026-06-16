@@ -2,7 +2,6 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 
 import Dashboard from '../views/Dashboard.vue'
 import Categories from '../views/Categories.vue'
-import Brands from '../views/Brands.vue'
 import Products from '../views/Products.vue'
 import Cashier from '../views/Cashier.vue'
 import Reports from '../views/Reports.vue'
@@ -32,11 +31,6 @@ const routes = [
     {
         path:'/kategori',
         component:Categories
-    },
-
-    {
-        path:'/brand',
-        component:Brands
     },
 
     {

@@ -51,10 +51,6 @@
             📂 Kategori
         </router-link>
 
-        <router-link to="/brand" @click="emit('close')" >
-            🏷 Brand
-        </router-link>
-
         <router-link to="/laporan" @click="emit('close')" >
             📊 Laporan
         </router-link>
@@ -172,6 +168,7 @@ onMounted(() => {
 
 
 
+
 .sidebar-header h2{
 
     margin:0;
@@ -273,6 +270,7 @@ onMounted(() => {
 
 @media(max-width:768px){
 
+
     .sidebar{
 
         position:fixed;
@@ -285,7 +283,7 @@ width:80%;
 
 max-width:280px;
 
-        z-index:9999;
+        z-index:1000;
 
         transform:translateX(-100%);
 

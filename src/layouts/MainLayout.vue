@@ -1,5 +1,7 @@
 <template>
 
+
+
 <div class="layout">
 
     <Sidebar
@@ -9,11 +11,12 @@
 
     <main class="content">
 
-        <AppHeader
-            @toggle-menu="
-                mobileMenu = !mobileMenu
-            "
-        />
+<AppHeader
+    :mobileMenu="mobileMenu"
+    @toggle-menu="
+        mobileMenu = !mobileMenu
+    "
+/>
 
         <div class="page-content">
             <slot />
@@ -33,6 +36,9 @@ import Sidebar from '../components/Sidebar.vue'
 import AppHeader from '../components/AppHeader.vue'
 
 const mobileMenu = ref(false)
+
+
+
 
 </script>
 
@@ -56,7 +62,7 @@ const mobileMenu = ref(false)
 
     width:100%;
 
-    padding:3px;
+    padding:0;
 
     box-sizing:border-box;
 
@@ -70,7 +76,7 @@ const mobileMenu = ref(false)
 
 .page-content{
 
-    margin-top:20px;
+    margin-top:0px;
 
 }
 
@@ -84,15 +90,15 @@ const mobileMenu = ref(false)
 
         width:100%;
 
-        padding:16px;
-
-        padding-bottom:20px;
+        padding:0;
 
     }
 
     .page-content{
 
-        margin-top:10px;
+        padding:0 16px 0px;
+
+        margin-top:0;
 
     }
 

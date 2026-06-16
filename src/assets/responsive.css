@@ -16,9 +16,16 @@
         width:100%;
     }
 
-    .page-content{
-        padding:16px;
+     .page-content{
+
+        padding: top 2px;;
+
+        padding-right:16px;
+
         padding-bottom:90px;
+
+        padding-left:16px;
+
     }
 
 }
