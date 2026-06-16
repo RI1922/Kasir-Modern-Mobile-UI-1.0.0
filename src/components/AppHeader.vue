@@ -183,13 +183,13 @@ onMounted(() => {
 
     .menu-btn{
 
-    width:60px;
-    height:60px;
+    width:48px;
+    height:48px;
 
-    min-width:60px;
-    min-height:60px;
+    min-width:48px;
+    min-height:48px;
 
-    font-size:34px;
+    font-size:28px;
 
     border:none;
     border-radius:14px;
@@ -218,13 +218,13 @@ onMounted(() => {
 
     .menu-btn{
 
-        width:60px;
-        height:60px;
+    width:48px;
+    height:48px;
 
-        min-width:60px;
-        min-height:60px;
+    min-width:48px;
+    min-height:48px;
 
-        font-size:34px;
+    font-size:28px;
 
         border:none;
 
