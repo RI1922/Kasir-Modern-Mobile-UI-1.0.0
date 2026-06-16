@@ -15,9 +15,7 @@
 <AppHeader
     v-if="useMobileSidebar"
     :mobileMenu="mobileMenu"
-    @toggle-menu="
-        mobileMenu = !mobileMenu
-    "
+    @toggle-menu="mobileMenu = !mobileMenu"
 />
 
         <div class="page-content">
@@ -74,18 +72,12 @@ onUnmounted(() => {
 
 const useMobileSidebar = computed(() => {
 
-    const isPhone =
-        screenWidth.value < 768
-
-    const isTabletPortrait =
-        screenWidth.value >= 768 &&
-        screenWidth.value <= 1024 &&
-        screenHeight.value > screenWidth.value
-
-    return (
-        isPhone ||
-        isTabletPortrait
+    const shortestSide = Math.min(
+        screenWidth.value,
+        screenHeight.value
     )
+
+    return shortestSide < 768
 
 })
 
