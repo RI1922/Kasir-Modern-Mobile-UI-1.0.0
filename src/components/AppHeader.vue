@@ -241,6 +241,7 @@ onMounted(() => {
     min-height:48px;
 
     background:rgba(0, 0, 0, 0.32);
+    color:white;
 
     font-size:28px;
 
