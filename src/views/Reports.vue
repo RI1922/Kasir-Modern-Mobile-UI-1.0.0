@@ -4,7 +4,6 @@
 <div class="filter-box">
 
     <div class="filter-item">
-        <label>Tgl Awal</label>
         <input
             type="date"
             v-model="startDate"
@@ -12,7 +11,6 @@
     </div>
 
     <div class="filter-item">
-        <label>Tgl Akhir</label>
         <input
             type="date"
             v-model="endDate"
@@ -1060,7 +1058,7 @@ td{
 
     gap:20px;
 
-    margin:25px 0;
+    margin:0px 0;
 
     flex-wrap:wrap;
 
@@ -1195,34 +1193,8 @@ td{
 
 }
 
-/* =========================
-   MOBILE RESPONSIVE REPORT
-========================= */
 
-@media(max-width:768px){
 
-    .summary-card{
-
-        grid-template-columns:
-            repeat(2,1fr);
-
-        gap:10px;
-
-    }
-
-    .summary-card div{
-
-        padding:12px !important;
-
-        min-height:70px;
-
-    }
-
-    .summary-card h2{
-    font-size:18px;
-}
-
-}
 
 .filter-box{
 
@@ -1232,7 +1204,7 @@ td{
 
     gap:16px;
 
-    margin-bottom:24px;
+    margin-bottom:10px;
 
     flex-wrap:wrap;
 
@@ -1300,26 +1272,50 @@ td{
 
 @media(max-width:768px){
 
+    .filter-item input{
+
+    width:100px;
+
+    height:48px;
+
+    padding:0 14px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#111827;
+
+    color:white;
+
+}
+
+.product-grid{
+
+        grid-template-columns:
+            repeat(3,1fr);
+
+        gap:12px;
+
+   
+
 
     .filter-box{
 
         display:grid;
 
-        grid-template-columns:
-        1fr 1fr;
-
         gap:10px;
 
-    }
+         }
 
     .btn-print{
 
-        grid-column:1 / 3;
+        display:grid;
 
-        width:100%;
+        height:10px;
 
-        height:42px;
-
+   
+     }
     }
 
 
@@ -1331,9 +1327,9 @@ td{
 
     .filter-item input{
 
-        height:20px;
+        height:2px;
 
-        padding:0 8px;
+        padding:1px 1px;
 
         font-size:11px;
 
@@ -1341,7 +1337,7 @@ td{
 
     .btn-print{
 
-        height:42px;
+        height:30px;
 
         padding:0 8px;
 
@@ -1351,8 +1347,131 @@ td{
 
     }
 
+
+
+    .summary-card{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+        gap:10px;
+
+    }
+
+    .summary-card div{
+
+        padding:12px !important;
+
+        min-height:70px;
+
+    }
+
+    .summary-card h2{
+    font-size:18px;}
+
 }
 
+
+@media (max-width: 900px) and (orientation: landscape){
+
+.filter-item input{
+
+    width:100px;
+
+    height:48px;
+
+    padding:0 14px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#111827;
+
+    color:white;
+
+}
+
+.product-grid{
+
+        grid-template-columns:
+            repeat(3,1fr);
+
+        gap:12px;
+
+   
+
+
+    .filter-box{
+
+        display:grid;
+
+        gap:10px;
+
+         }
+
+    .btn-print{
+
+        display:grid;
+
+        height:10px;
+
+   
+     }
+    }
+
+
+    .filter-item label{
+
+        font-size:11px !important;
+
+    }
+
+    .filter-item input{
+
+        height:2px;
+
+        padding:1px 1px;
+
+        font-size:11px;
+
+    }
+
+    .btn-print{
+
+        height:30px;
+
+        padding:0 8px;
+
+        font-size:11px;
+
+        white-space:nowrap;
+
+    }
+
+
+
+    .summary-card{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+        gap:10px;
+
+    }
+
+    .summary-card div{
+
+        padding:12px !important;
+
+        min-height:70px;
+
+    }
+
+    .summary-card h2{
+    font-size:18px;}
+
+}
 
 
 </style>

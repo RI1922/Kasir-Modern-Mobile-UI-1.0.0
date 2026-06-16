@@ -181,6 +181,9 @@
 
 <script setup>
 
+import { showSuccess }
+from '../utils/toast'
+
 import {
     ref,
     computed,
@@ -288,7 +291,7 @@ const addToCart = (product) => {
 
     if(product.stock <= 0){
 
-    alert('Stok habis')
+    showError('Stok habis')
     return
 
 }
@@ -321,7 +324,7 @@ const increaseQty = (item) => {
 
     if(item.qty >= item.stock){
 
-        alert('Stok tidak mencukupi')
+        showError('Stok tidak mencukupi')
         return
 
     }
@@ -615,14 +618,14 @@ const checkout = async () => {
 
         if(cart.value.length === 0){
 
-            alert('Keranjang kosong')
+            showError('Keranjang kosong')
             return
 
         }
 
         if(payment.value < total.value){
 
-            alert('Uang kurang')
+            showError('Uang kurang')
             return
 
         }
@@ -727,7 +730,7 @@ const checkout = async () => {
 
         console.error(error)
 
-        alert(
+        showError(
             'ERROR: ' +
             error.message
         )
@@ -875,10 +878,8 @@ const checkout = async () => {
 .product-image img{
 
     width:100%;
-
     height:100%;
-
-    object-fit:cover;
+    object-fit:contain;
 
     border-radius:20px;
 
@@ -1147,6 +1148,278 @@ const checkout = async () => {
             #0f172a,
             #ff00fb
         );
+
+}
+
+
+
+
+
+@media(max-width:768px){
+
+    .product-grid{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+        gap:12px;
+
+    }
+
+    .product-card{
+
+        padding:12px;
+
+        border-radius:18px;
+
+    }
+
+    .product-image{
+
+        height:90px;
+
+        border-radius:14px;
+
+        margin-bottom:10px;
+
+    }
+
+    .product-image img{
+
+        border-radius:14px;
+
+    }
+
+    .product-card h3{
+
+        font-size:15px;
+
+        display:-webkit-box;
+
+        -webkit-line-clamp:2;
+
+        -webkit-box-orient:vertical;
+
+        overflow:hidden;
+
+        min-height:38px;
+
+    }
+
+    .floating-cart{
+
+    position:fixed;
+
+    right:20px;
+
+    bottom:90px;
+
+    width:62px;
+
+    height:62px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-size:28px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    cursor:pointer;
+
+    z-index:999;
+
+}
+
+}
+
+@media(min-width:769px) and (max-width:1366px){
+
+    .floating-cart{
+
+    position:fixed;
+
+    right:70px;
+
+    bottom:70px;
+
+    width:82px;
+
+    height:72px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-size:38px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    cursor:pointer;
+
+    z-index:999;
+
+        
+
+    }
+
+    .product-image img{
+
+    width:100%;
+    height:100%;
+    object-fit:contain;
+
+}
+
+    .cart-badge{
+
+        width:28px;
+
+        height:28px;
+
+        font-size:24px;
+
+        top:-6px;
+
+        right:-6px;
+
+    }
+
+
+}
+
+@media(min-width:900px){
+
+    .floating-cart{
+
+    position:fixed;
+
+    right:70px;
+
+    bottom:80px;
+
+    width:82px;
+
+    height:82px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-size:38px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    cursor:pointer;
+
+    z-index:999;
+
+        
+
+    }
+
+    .product-image img{
+
+    width:100%;
+    height:100%;
+    object-fit:contain;
+
+}
+
+    .cart-badge{
+
+        width:28px;
+
+        height:28px;
+
+        font-size:24px;
+
+        top:-6px;
+
+        right:-6px;
+
+    }
+
+
+}
+
+/* ==================================
+   HP LANDSCAPE
+================================== */
+
+@media (max-width: 900px) and (orientation: landscape){
+
+    .product-grid{
+
+        grid-template-columns:
+            repeat(3,1fr);
+
+        gap:12px;
+
+    }
+
+    .product-card{
+
+        padding:12px;
+
+        border-radius:18px;
+
+    }
+
+    .product-image img{
+
+    width:100%;
+    height:100%;
+    object-fit:contain;
+
+}
+
+    .product-card h3{
+
+        font-size:14px;
+
+        margin-bottom:4px;
+
+    }
+
+    .product-card p{
+
+        font-size:13px;
+
+        margin-bottom:2px;
+
+    }
+
+    .product-card small{
+
+        font-size:12px;
+
+    }
 
 }
 

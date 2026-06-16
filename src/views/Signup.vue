@@ -49,6 +49,11 @@
 
 <script setup>
 
+
+import { showSuccess }
+from '../utils/toast'
+
+
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -68,7 +73,7 @@ const register = () => {
 
     ){
 
-        alert(
+        showError(
             'Semua field wajib diisi'
         )
 
@@ -84,7 +89,7 @@ const register = () => {
 
     ){
 
-        alert(
+        showError(
             'Password tidak sama'
         )
 
@@ -111,10 +116,6 @@ const register = () => {
 
         })
 
-    )
-
-    alert(
-        'Akun berhasil dibuat'
     )
 
     router.push('/login')

@@ -52,6 +52,10 @@
 
 <script setup>
 
+import { showSuccess }
+from '../utils/toast'
+
+
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -63,22 +67,19 @@ const password = ref('')
 const login = () => {
 
     const account = JSON.parse(
+    localStorage.getItem('user_account')
+)
 
-        localStorage.getItem(
-            'user_account'
-        )
+if(!account){
 
+    showError(
+        'Akun belum tersedia, silakan daftar terlebih dahulu'
     )
 
-    if(!account){
+    router.push('/signup')
 
-        alert(
-            'Akun belum dibuat'
-        )
-
-        return
-
-    }
+    return
+}
 
     if(
 
@@ -98,23 +99,21 @@ const login = () => {
 
         )
 
-        alert(
-            'Login berhasil'
-        )
-
         router.push('/')
 
     }
 
     else{
 
-        alert(
+        showError(
             'Username atau password salah'
         )
 
     }
 
 }
+
+
 
 </script>
 
@@ -233,5 +232,6 @@ button:hover{
     opacity:.9;
 
 }
+
 
 </style>

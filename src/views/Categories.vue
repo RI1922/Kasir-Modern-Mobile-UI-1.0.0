@@ -443,5 +443,35 @@ tr{
 
 }
 
+@media(max-width:768px){
+
+    td:last-child{
+
+        display:flex;
+        flex-direction:row;
+        gap:6px;
+        align-items:center;
+
+    }
+
+    .btn-edit,
+    .btn-delete{
+
+        min-width:40px;
+        height:20px;
+
+        padding:8px 8px;
+
+        font-size:12px;
+        font-weight:600;
+
+        display:flex;
+        align-items:center;
+        justify-content:center;
+
+        margin:0;
+    }
+
+}
 
 </style>

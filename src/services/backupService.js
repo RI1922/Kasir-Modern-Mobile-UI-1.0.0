@@ -1,4 +1,6 @@
 import db from '../db/database'
+import { showSuccess }
+from '../utils/toast'
 
 export const backupService = {
 
@@ -26,16 +28,6 @@ export const backupService = {
 
                         localStorage.getItem(
                             'store_settings'
-                        ) || '{}'
-
-                    ),
-
-                user_account:
-
-                    JSON.parse(
-
-                        localStorage.getItem(
-                            'user_account'
                         ) || '{}'
 
                     ),
@@ -111,7 +103,7 @@ console.log(
 
             console.error(error)
 
-            alert(
+            showError(
                 'Backup gagal dibuat'
             )
 
@@ -208,26 +200,6 @@ console.log(
 
                 }
 
-                if(
-                    data.user_account
-                ){
-
-                    localStorage.setItem(
-
-                        'user_account',
-
-                        JSON.stringify(
-                            data.user_account
-                        )
-
-                    )
-
-                }
-
-                alert(
-                    'Restore berhasil'
-                )
-
                 event.target.value = ''
 
                 location.reload()
@@ -238,9 +210,9 @@ console.log(
 
                 console.error(error)
 
-                alert(
-                    'File backup tidak valid'
-                )
+showError(
+    'File backup tidak valid'
+)
 
             }
 
@@ -274,6 +246,9 @@ console.log(
 
             await db.transactions.clear()
 
+            localStorage.removeItem('user_account')
+            localStorage.removeItem('isLoggedIn')
+
             localStorage.removeItem(
                 'store_settings'
             )
@@ -282,11 +257,11 @@ console.log(
                 'last_backup'
             )
 
-            alert(
-                'Semua data berhasil dihapus'
-            )
+            showSuccess(
+    'Semua data berhasil dihapus'
+)
 
-            location.reload()
+window.location.href = '#/login'
 
         }
 
@@ -294,7 +269,7 @@ console.log(
 
             console.error(error)
 
-            alert(
+            showError(
                 'Gagal menghapus data'
             )
 

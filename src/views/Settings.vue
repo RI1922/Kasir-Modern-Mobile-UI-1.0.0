@@ -280,6 +280,11 @@
 
 <script setup>
 
+
+import { showSuccess }
+from '../utils/toast'
+
+
 import {
     ref,
     onMounted
@@ -408,7 +413,7 @@ const saveSettings = () => {
 
     )
 
-    alert(
+    showSuccess(
         'Pengaturan berhasil disimpan'
     )
 
@@ -424,7 +429,7 @@ const saveUser = () => {
 
     ){
 
-        alert(
+        showError(
             'Username dan password wajib diisi'
         )
 
@@ -440,7 +445,7 @@ const saveUser = () => {
 
     ){
 
-        alert(
+        showError(
             'Password tidak sama'
         )
 
@@ -469,7 +474,7 @@ const saveUser = () => {
 
 )
 
-    alert(
+    showSuccess(
         'Akun berhasil disimpan'
     )
 
@@ -488,9 +493,9 @@ const backupData = async () => {
                 'last_backup'
             )
 
-        alert(
-            'Backup berhasil dibuat'
-        )
+        showSuccess(
+    'Backup berhasil dibuat'
+)
 
     }
 
@@ -603,12 +608,11 @@ const logout = () => {
 
     flex-direction:column;
 
-    margin-bottom:25px;
-
     gap:15px;
 
     min-height:90px;
 
+    margin-bottom:0;
 
 }
 
@@ -791,7 +795,7 @@ button{
 
     display:grid;
 
-    grid-template-columns:1.6fr 1fr;
+    grid-template-columns:1.8fr 1fr;
 
     gap:20px;
 
@@ -919,6 +923,91 @@ button{
 .backup-info strong{
 
     color:white;
+
+}
+
+@media(max-width:767px){
+
+    .settings-layout{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .right-panel{
+
+        position:static;
+
+        top:auto;
+
+    }
+
+    .form-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+        .button-group{
+
+        flex-direction:column;
+
+    }
+
+
+
+
+}
+
+@media (min-width:768px) and (max-width:1024px){
+
+    .settings-layout{
+
+        grid-template-columns:1.4fr .9fr;
+
+        gap:16px;
+
+    }
+
+    .settings-card{
+
+        padding:16px;
+
+    }
+
+    .section-card{
+
+        padding:16px;
+
+    }
+
+    .form-grid{
+
+        grid-template-columns:1fr 1fr;
+
+        gap:14px;
+
+    }
+
+    .info-grid{
+
+        gap:10px;
+
+    }
+
+    .info-grid div{
+
+        padding:14px;
+
+        min-height:70px;
+
+    }
+
+    .right-panel{
+
+        position:static;
+
+    }
 
 }
 

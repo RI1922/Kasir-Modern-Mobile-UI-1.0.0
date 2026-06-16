@@ -13,9 +13,13 @@
 
         <div class="mobile-store">
 
-            <h3>{{ storeName }}</h3>
+    <h3>{{ storeName }}</h3>
 
-        </div>
+    <small>
+    {{ owner || 'Pemilik Toko' }}
+</small>
+
+</div>
 
     </div>
 
@@ -39,6 +43,8 @@ const storeName = ref(
     ''
 )
 
+const owner = ref('')
+
 onMounted(() => {
 
     const settings =
@@ -51,95 +57,18 @@ onMounted(() => {
 
     }
 
+        if(settings.owner){
+
+        owner.value =
+            settings.owner
+
+    }
+
 })
 
 </script>
 
 <style scoped>
-
-.header{
-
-    display:flex;
-
-    align-items:center;
-
-    margin-bottom:8px;
-
-}
-
-.header-left{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-}
-
-.header h2{
-
-    margin:0;
-
-    font-size:24px;
-
-    font-weight:700;
-
-}
-
-.header small{
-
-    color:#9ca3af;
-
-}
-
-.menu-btn{
-
-    display:none;
-
-}
-
-@media(max-width:768px){
-
-    .menu-btn{
-
-        display:flex;
-
-        align-items:center;
-
-        justify-content:center;
-
-        width:42px;
-
-        height:42px;
-
-        border:none;
-
-        border-radius:10px;
-
-        background:#111827;
-
-        color:white;
-
-        font-size:20px;
-
-        cursor:pointer;
-
-    }
-
-    .header h2{
-
-        font-size:18px;
-
-    }
-
-    .header small{
-
-        font-size:11px;
-
-    }
-
-}
 
 
 .header{
@@ -150,7 +79,9 @@ onMounted(() => {
 
     justify-content:center;
 
-    margin-bottom:12px;
+    margin-bottom:16px;
+
+    padding:8px 0;
 
 }
 
@@ -164,6 +95,8 @@ onMounted(() => {
 
     width:100%;
 
+    min-width:0;
+
 }
 
 .menu-btn{
@@ -174,9 +107,17 @@ onMounted(() => {
 
 .mobile-store{
 
-    display:none;
+    display:block;
+
+    flex:1;
+
+    min-width:0;
 
 }
+
+
+
+
 
 /* HP */
 
@@ -190,13 +131,13 @@ onMounted(() => {
 
         justify-content:center;
 
-        width:42px;
+        width:48px;
 
-        height:42px;
+        height:48px;
 
         border:none;
 
-        border-radius:10px;
+        border-radius:14px;
 
         background:#111827;
 
@@ -206,25 +147,40 @@ onMounted(() => {
 
         cursor:pointer;
 
-    }
+        flex-shrink:0;
 
-    .mobile-store{
-
-        display:block;
-
-    }
-
-    .mobile-store h3{
-
-        margin:0;
-
-        font-size:20px;
-
-        font-weight:700;
-
-        color:white;
+        box-shadow:
+            0 4px 12px rgba(0,0,0,.25);
 
     }
+
+.mobile-store h3{
+
+    margin:0;
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:700;
+
+    line-height:1.2;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+}
+
+.mobile-store small{
+
+    color:#94a3b8;
+
+    font-size:11px;
+
+}
 
 }
 

@@ -13,7 +13,7 @@ export const settingsService = {
                 storeName:'Kasir Modern',
                 address:'',
                 phone:'',
-                owner:'',
+                owner:'Pemilik Toko',
                 logo:''
 
             }

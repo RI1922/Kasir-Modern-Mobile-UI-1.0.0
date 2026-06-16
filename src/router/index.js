@@ -11,7 +11,6 @@ import Settings from '../views/Settings.vue'
 import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
 import Backup from '../views/Backup.vue'
-import MenuMobile from '../views/MenuMobile.vue'
 
 const routes = [
 
@@ -91,37 +90,32 @@ router.beforeEach((to, from, next) => {
             'user_account'
         )
 
-    if(
-
-        !hasAccount &&
-
-        to.path !== '/signup'
-
-    ){
-
-        next('/signup')
-
-        return
-
-    }
+if(
+    !hasAccount &&
+    to.path !== '/login' &&
+    to.path !== '/signup'
+){
+    next('/login')
+    return
+}
 
     if(
 
-        hasAccount &&
+    hasAccount &&
 
-        !isLoggedIn &&
+    !isLoggedIn &&
 
-        to.path !== '/login' &&
+    to.path !== '/login' &&
 
-        to.path !== '/signup'
+    to.path !== '/signup'
 
-    ){
+){
 
-        next('/login')
+    next('/login')
 
-        return
+    return
 
-    }
+}
 
     next()
 

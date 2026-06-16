@@ -32,7 +32,7 @@
 
 </h1>
 
-<small>
+<h3>
 
 {{
 
@@ -52,7 +52,7 @@ marginProfit >= 50
 
 }}
 
-</small>
+</h3>
 
 </div>
 
@@ -64,9 +64,9 @@ marginProfit >= 50
 
     <div class="stock-item">
 
-        <span>
+        <h3>
             ✅ Aman
-        </span>
+        </h3>
 
         <strong>
             {{ stokAman }}
@@ -76,9 +76,10 @@ marginProfit >= 50
 
     <div class="stock-item">
 
-        <span>
+        <h3>
             ⚠️ Restok
-        </span>
+        </h3>
+            
 
         <strong>
             {{ stokRestok }}
@@ -88,9 +89,9 @@ marginProfit >= 50
 
     <div class="stock-item">
 
-        <span>
+        <h3>
             ❌ Habis
-        </span>
+        </h3>
 
         <strong>
             {{ stokHabis }}
@@ -157,11 +158,13 @@ marginProfit >= 50
         📊 Penjualan & Profit Bulanan
     </h2>
 
+    <div class="chart-scroll">
+
     <div class="chart-container">
 
-    <canvas
-        ref="salesCanvas"
-    ></canvas>
+        <canvas ref="salesCanvas"></canvas>
+
+    </div>
 
 </div>
 
@@ -373,21 +376,20 @@ topProducts.value =
 await nextTick()
 
 renderSalesChart(transactions)
+
+
 }
 
-console.log(
-    salesCanvas.value,
-    salesCanvas.value?.offsetWidth,
-    salesCanvas.value?.offsetHeight
-)
 
 const renderSalesChart = (transactions) => {
 
-    const today = new Date()
+const today = new Date()
 
 const year = today.getFullYear()
 
 const month = today.getMonth()
+
+const isMobile = window.innerWidth <= 768
 
 const lastDay = new Date(
     year,
@@ -513,57 +515,70 @@ datasets:[
     maintainAspectRatio:false,
 
     interaction:{
-    mode:'index',
-    intersect:false
-},
+        mode:'index',
+        intersect:false
+    },
 
     plugins:{
+
+        tooltip:{
+            enabled:true
+        },
+
         legend:{
             labels:{
                 color:'#ffffff'
             }
         }
-    },
-
-scales:{
-
-    x:{
-
-        title:{
-
-            display:true,
-
-            text:'Tanggal',
-
-            color:'#ffffff'
-
-        },
-
-        ticks:{
-            color:'#ffffff'
-        }
 
     },
 
-    y:{
+    scales:{
 
-        title:{
+        x:{
 
-            display:true,
-
-            text:'Omzet',
-
-            color:'#ffffff'
+            title:{
+                display:true,
+                text:'Tanggal',
+                color:'#ffffff'
+            },
 
         },
 
-        ticks:{
-            color:'#ffffff'
-        }
+        y:{
+
+    title:{
+        display:false
+    },
+
+    ticks:{
+        color:'rgba(255,255,255,0.5)',
+
+        callback:function(value){
+
+            if(value >= 1000000){
+
+        return (value / 1000000) + 'JT'
+
+    }
+
+    if(value >= 1000){
+
+        return (value / 1000) + 'K'
+
+    }
+
+    return value
+
+}
 
     }
 
 }
+    }
+
+
+
             }
 
         }
@@ -579,21 +594,27 @@ onMounted(loadData)
 <style scoped>
 
 .dashboard{
-  
+
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+
+    grid-template-columns:
+        repeat(4,1fr);
+
     gap:20px;
 
     animation:
-    fadeIn .5s ease;
+        fadeIn .5s ease;
+
 }
 
 .card{
 
     padding:25px;
 
-    border-radius:24px;
+    min-height:140px;
 
+    border-radius:24px;
+    
     color:white;
 
     position:relative;
@@ -664,21 +685,12 @@ onMounted(loadData)
     background:linear-gradient(135deg,#0f172a,#0044ff);
 }
 
-.transaksi{
-    background:linear-gradient(135deg,#0f172a,#bbff00);
-}
-
-.produk{
-    background:linear-gradient(135deg,#0f172a,#ff00fb);
-}
-
 .card h1{
 
-    margin-top:15px;
+    margin-top:18px;
 
-    font-size:30px;
-
-    font-weight:700;
+    margin-bottom:8px;
+    
 
 }
 
@@ -701,22 +713,22 @@ onMounted(loadData)
 
     align-items:center;
 
-    margin-top:12px;
+    margin-top:8px;
 
-    padding:10px 12px;
+    padding:10px 13px;
 
     background:
     rgba(255,255,255,.12);
 
     border-radius:12px;
 
-    font-size:15px;
+    font-size:12px;
 
 }
 
 .stock-item strong{
 
-    font-size:18px;
+    font-size:14px;
 
 }
 
@@ -750,7 +762,7 @@ onMounted(loadData)
 
     padding:30px;
 
-    height:300px;
+    overflow:hidden;
 
 }
 
@@ -782,6 +794,14 @@ onMounted(loadData)
 
     font-weight:600;
 
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    white-space:nowrap;
+
+    max-width:75%;
+
 }
 
 .top-right{
@@ -810,13 +830,9 @@ onMounted(loadData)
 
     flex-direction:column;
 
-    gap:30px;
+    gap:20px;
 
-    margin-top:30px;
-
-}
-
-.bottom-section{
+    margin-top:20px;
 
     align-items:stretch;
 
@@ -829,16 +845,6 @@ onMounted(loadData)
     border-radius:24px;
 
     padding:25px;
-
-}
-
-.chart-wrapper{
-
-    position:relative;
-
-    width:100%;
-
-    height:400px;
 
 }
 
@@ -892,7 +898,37 @@ onMounted(loadData)
 
     width:100%;
 
-    height:400px;
+    height:420px;
+
+}
+
+.chart-scroll{
+
+    width:100%;
+
+    overflow-x:auto;
+
+    overflow-y:hidden;
+
+}
+
+@media(max-width:768px){
+
+    .chart-scroll{
+
+    overflow-x:auto;
+
+    -webkit-overflow-scrolling:touch;
+
+}
+
+.chart-container{
+
+    width:650px;
+
+    height:260px;
+
+}
 
 }
 
@@ -904,6 +940,80 @@ onMounted(loadData)
 
 }
 
+
+/* ==================================
+   MOBILE
+================================== */
+
+@media(max-width:768px){
+
+    .dashboard{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+        gap:12px;
+
+    }
+
+
+    .card{
+
+        min-height:110px;
+
+        padding:15px;
+
+        border-radius:14px;
+
+    }
+
+    .card h1{
+
+        font-size:14px;
+
+    }
+
+    .card h3{
+
+        font-size:14px;
+
+    }
+
+
+    .chart-container{
+
+        height:260px;
+
+    }
+
+
+    .top-products{
+
+        padding:16px;
+
+    }
+
+    .top-item{
+
+        padding:10px 12px;
+
+        margin-bottom:10px;
+
+    }
+
+    .stock-item{
+
+        margin-top:5px;
+
+        padding:5px 8px;
+
+        border-radius:8px;
+
+        font-size:12px;
+
+    }
+
+}
 
 
 </style>

@@ -42,7 +42,9 @@ const mobileMenu = ref(false)
 
     display:flex;
 
-    min-height:100vh;
+    height:100vh;
+
+    overflow:hidden;
 
     background:#020617;
 
@@ -52,13 +54,17 @@ const mobileMenu = ref(false)
 
     flex:1;
 
-    margin-left:280px;
+    width:100%;
 
-    width:calc(100% - 280px);
-
-    padding:20px;
+    padding:3px;
 
     box-sizing:border-box;
+
+    overflow-x:hidden;
+
+    overflow-y:auto;
+
+    height:100vh;
 
 }
 
@@ -78,7 +84,7 @@ const mobileMenu = ref(false)
 
         width:100%;
 
-        padding:12px;
+        padding:16px;
 
         padding-bottom:20px;
 

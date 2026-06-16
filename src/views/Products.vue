@@ -54,7 +54,7 @@
             </p>
 
             <p>
-                💰 Rp {{ item.sellingPrice }}
+                💰 Rp {{ Number(item.sellingPrice).toLocaleString('id-ID') }}
             </p>
 
             <p>
@@ -170,6 +170,7 @@
 
     <div class="modal-content">
 
+
         <h2>
             Tambah Produk
         </h2>
@@ -214,11 +215,6 @@
             </option>
 
         </select>
-
-        <input
-            v-model="form.barcode"
-            placeholder="Barcode"
-        >
 
         <input
             v-model="form.purchasePrice"
@@ -311,8 +307,6 @@ const form = ref({
 
     brandId:'',
 
-    barcode:'',
-
     purchasePrice:0,
 
     sellingPrice:0,
@@ -392,13 +386,11 @@ const openCreate = () => {
 
         brandId:'',
 
-        barcode:'',
+        purchasePrice:'',
 
-        purchasePrice:0,
+        sellingPrice:'',
 
-        sellingPrice:0,
-
-        stock:0,
+        stock:'',
 
         image:''
 
@@ -421,8 +413,6 @@ const openEdit = (item) => {
         categoryId:item.categoryId,
 
         brandId:item.brandId,
-
-        barcode:item.barcode,
 
         purchasePrice:item.purchasePrice,
 
@@ -566,7 +556,7 @@ tr{
     color:white;
     border:none;
     padding:8px 12px;
-    border-radius:10px;
+    border-radius:8px;
     margin-right:8px;
 }
 
@@ -575,7 +565,8 @@ tr{
     color:white;
     border:none;
     padding:8px 12px;
-    border-radius:10px;
+    border-radius:8px;
+    margin-right:8px;
 }
 
 .modal{
@@ -701,11 +692,15 @@ tr{
 
     flex:1;
 
+    display:left;
+
 }
 
 .product-card-info h3{
 
     font-size:14px;
+
+    display:left;
 
     margin-bottom:4px;
 
@@ -731,55 +726,183 @@ tr{
 
 }
 
+@media(min-width:769px) and (max-width:1366px){
+
+    .product-image img{
+
+    width:100%;
+    height:100%;
+    object-fit:contain;
+
+}
+
+ .btn-edit,
+    .btn-delete{
+
+        min-width:40px;
+        height:36px;
+
+        padding:8px 2px;
+
+        font-size:12px;
+        font-weight:600;
+
+        display:flex;
+        align-items:center;
+        justify-content:center;
+
+        margin:0;
+    }
+
+
+}
+
 @media(max-width:768px){
 
-    .table-card{
 
+.table-card{
         display:none;
+    }
 
+    .mobile-products{
+        display:block;
     }
 
     .mobile-products{
 
-        display:block;
+        display:grid;
+
+        grid-template-columns:repeat(2,1fr);
+
+        gap:12px;
 
     }
 
     .product-card{
 
+        display:flex;
+
+        flex-direction:column;
+
+        text-align:left;
+
         padding:10px;
 
-    }
+        margin-bottom:0;
 
-    .product-card-image{
+        border-radius:18px;
 
-        width:55px;
-
-        height:55px;
+        height:100%;
 
     }
+
+.product-image img{
+
+    width:100%;
+    height:100%;
+    object-fit:contain;
+
+}
+
 
     .product-card-info h3{
 
-        font-size:13px;
+        align-items:left !important;
+
+        font-size:15px;
+
+        line-height:1.3;
+
+        margin-bottom:1px;
+
+        display:-webkit-box;
+
+        -webkit-line-clamp:2;
+
+        -webkit-box-orient:vertical;
+
+        overflow:hidden;
 
     }
 
-    .product-card-info p{
+    .product-card-actions .btn-edit,
+.product-card-actions .btn-delete{
 
-        font-size:11px;
+    flex:1 !important;
 
+    width:0 !important;
+
+    height:20px !important;
+
+    padding:2px 28px !important;
+
+    margin:0 !important;
+    
+
+}
+
+.product-card-actions{
+
+    display:left;
+
+    flex-direction:row;
+
+    gap:6px;
+
+}
+
+.btn-edit,
+.btn-delete{
+
+    flex:1;
+
+    width:auto;
+
+    height:37px;
+
+    padding:8px 12px;
+
+    border:none;
+
+    margin-right:8px;
+
+    border-radius:10px;
+
+    font-size:11px;
+
+    font-weight:600;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+}
+
+@media (max-width: 900px) and (orientation: landscape){
+
+    
+
+.table-card{
+        display:none;
     }
 
-    .btn-edit,
-    .btn-delete{
-
-        font-size:10px;
-
-        padding:6px 10px;
-
+    .mobile-products{
+        display:block;
     }
 
+    .mobile-products{
+
+        display:grid;
+
+        grid-template-columns:repeat(3,1fr);
+
+        gap:12px;
+
+    }
 }
 
 </style>
