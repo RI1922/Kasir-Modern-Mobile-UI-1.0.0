@@ -1,6 +1,17 @@
 <template>
 
-
+<div
+    v-if="isLandscapePhone"
+    class="rotate-screen"
+>
+    <div class="rotate-box">
+        📱
+        <br><br>
+        Silakan putar perangkat
+        <br>
+        ke mode portrait
+    </div>
+</div>
 
 <div class="layout">
 
@@ -30,12 +41,29 @@
 
 <script setup>
 
+
+
 import {
     ref,
     computed,
     onMounted,
     onUnmounted
 } from 'vue'
+
+const isLandscapePhone = ref(false)
+
+const checkOrientation = () => {
+
+    const shortestSide = Math.min(
+        window.innerWidth,
+        window.innerHeight
+    )
+
+    isLandscapePhone.value =
+        window.innerWidth > window.innerHeight &&
+        shortestSide < 600
+
+}
 
 import Sidebar from '../components/Sidebar.vue'
 import AppHeader from '../components/AppHeader.vue'
@@ -54,9 +82,18 @@ const updateSize = () => {
 
 onMounted(() => {
 
+    updateSize()
+
+    checkOrientation()
+
     window.addEventListener(
         'resize',
         updateSize
+    )
+
+    window.addEventListener(
+        'resize',
+        checkOrientation
     )
 
 })
@@ -66,6 +103,11 @@ onUnmounted(() => {
     window.removeEventListener(
         'resize',
         updateSize
+    )
+
+    window.removeEventListener(
+        'resize',
+        checkOrientation
     )
 
 })
@@ -143,6 +185,42 @@ const useMobileSidebar = computed(() => {
         margin-top:0;
 
     }
+
+}
+
+.rotate-screen{
+
+    position:fixed;
+
+    inset:0;
+
+    background:#020617;
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    padding:24px;
+
+    font-size:22px;
+
+    font-weight:700;
+
+    z-index:999999;
+
+}
+
+.rotate-box{
+
+    text-align:center;
+
+    line-height:1.6;
 
 }
 
