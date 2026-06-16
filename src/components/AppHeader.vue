@@ -106,18 +106,6 @@ onMounted(() => {
 
 }
 
-.header-left{
-
-    display:flex;
-
-    align-items:center;
-
-    width:100%;
-
-    min-height:52px;
-
-}
-
 .mobile-store{
 
     display:block;
@@ -135,11 +123,6 @@ onMounted(() => {
 /* HP */
 
 @media(max-width:767px){
-
-    .mobile-store{
-
-        padding-left:62px;
-    }
 
     .mobile-store h3{
 
@@ -233,8 +216,6 @@ onMounted(() => {
 
 @media (max-height:500px){
 
-@media (max-height:500px){
-
     .menu-btn{
 
         width:48px;
@@ -261,7 +242,7 @@ onMounted(() => {
 
     }
 
-}
+
 }
 
 
