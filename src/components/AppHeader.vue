@@ -257,8 +257,7 @@ onMounted(() => {
         align-items:center;
         justify-content:center;
 
-        box-shadow:
-            inset 0 0 0 2px rgba(255,255,255,.08);
+        flex-shrink:0;
 
     }
 
