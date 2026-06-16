@@ -74,24 +74,17 @@ onUnmounted(() => {
 
 const useMobileSidebar = computed(() => {
 
-    const isTabletPortrait =
-        screenWidth.value <= 1024 &&
-        screenHeight.value > screenWidth.value
-
-    const isPhoneLandscape =
-        screenWidth.value <= 1024 &&
-        screenHeight.value <= 500
-        
-
     const isPhone =
         screenWidth.value < 768
 
+    const isTabletPortrait =
+        screenWidth.value >= 768 &&
+        screenWidth.value <= 1024 &&
+        screenHeight.value > screenWidth.value
+
     return (
         isPhone ||
-        isPhoneLandscape ||
         isTabletPortrait
-
-        
     )
 
 })
