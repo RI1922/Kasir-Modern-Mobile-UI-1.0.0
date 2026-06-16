@@ -225,26 +225,25 @@ onMounted(() => {
 }
 
     .mobile-store{
-
-        padding-left:1px;
-    }
+    margin-left:12px;
+}
 
 }
 
 
 @media (max-height:500px){
 
-    .menu-btn{
+.menu-btn{
+    width:48px;
+    height:48px;
 
-        width:70px;
-        height:70px;
+    min-width:48px;
+    min-height:48px;
 
-        min-width:70px;
-        min-height:70px;
+    font-size:28px;
 
-        font-size:40px;
-    }
-
+    border-radius:10px;
+}
 }
 
 
