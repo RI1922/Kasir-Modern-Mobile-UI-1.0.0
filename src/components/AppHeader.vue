@@ -136,37 +136,6 @@ onMounted(() => {
 
 @media(max-width:767px){
 
-    .menu-btn{
-
-        display:flex;
-
-        align-items:center;
-        justify-content:center;
-
-        position:flex;
-        top:8px;
-        left:2px;
-
-        width:74px;
-        height:74px;
-
-        border:none;
-        border-radius:8px;
-
-        background:rgba(0, 0, 0, 0.32);
-        color:white;
-
-        font-size:32px;
-
-        cursor:pointer;
-
-        z-index:900;
-
-        box-shadow:
-            0 6px 20px rgba(31, 31, 31, 0);
-
-    }
-
     .mobile-store{
 
         padding-left:62px;
@@ -261,6 +230,24 @@ onMounted(() => {
     }
 
 }
+
+
+@media (max-height:500px){
+
+    .menu-btn{
+
+        width:70px;
+        height:70px;
+
+        min-width:70px;
+        min-height:70px;
+
+        font-size:40px;
+    }
+
+}
+
+
 
 /* TABLET PORTRAIT */
 
