@@ -1,5 +1,8 @@
 import db from '../db/database'
-import { showSuccess }
+import {
+    showSuccess,
+    showError
+}
 from '../utils/toast'
 
 export const backupService = {
@@ -9,6 +12,7 @@ export const backupService = {
         try {
 
             const data = {
+    
 
                 products:
                     await db.products.toArray(),
@@ -133,6 +137,19 @@ console.log(
                         reader.result
                     )
 
+                    if (
+    !data ||
+    !Array.isArray(data.products) ||
+    !Array.isArray(data.categories) ||
+    !Array.isArray(data.transactions)
+) {
+
+    throw new Error(
+        'Format backup tidak valid'
+    )
+
+}
+
                 await db.products.clear()
 
                 await db.categories.clear()
@@ -187,7 +204,15 @@ console.log(
 
                 event.target.value = ''
 
-                location.reload()
+                showSuccess(
+    'Backup berhasil dipulihkan'
+)
+
+setTimeout(() => {
+
+    location.reload()
+
+}, 1000)
 
             }
 
@@ -223,11 +248,7 @@ showError(
 
         try {
 
-            await db.products.clear()
-
-            await db.categories.clear()
-
-            await db.transactions.clear()
+            await db.delete()
 
             localStorage.removeItem('user_account')
             localStorage.removeItem('isLoggedIn')

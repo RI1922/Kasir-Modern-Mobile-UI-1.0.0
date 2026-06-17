@@ -51,8 +51,9 @@
 
     <!-- FLOATING CART -->
 
-    <button
+<button
     class="floating-cart"
+    :class="{ hidden: cartOpen }"
     @click="cartOpen = true"
 >
     🛒
@@ -117,32 +118,26 @@
 
                 </div>
 
-                <div class="qty-box">
+<div class="action-box">
+
+    <div class="qty-box">
+
+        <button @click="decreaseQty(item)">-</button>
+
+        <span>{{ item.qty }}</span>
+
+        <button @click="increaseQty(item)">+</button>
+
+    </div>
 
     <button
-        @click="decreaseQty(item)"
+        class="remove-btn"
+        @click="removeFromCart(item.id)"
     >
-        -
-    </button>
-
-    <span>
-        {{ item.qty }}
-    </span>
-
-    <button
-        @click="increaseQty(item)"
-    >
-        +
+        🗑
     </button>
 
 </div>
-
-<button
-    class="remove-btn"
-    @click="removeFromCart(item.id)"
->
-    🗑
-</button>
 
             </div>
 
@@ -154,7 +149,7 @@
 
                 <input
                     type="number"
-                    v-model="payment"
+                    v-model.number="payment"
                     placeholder="Bayar"
                 >
 
@@ -181,7 +176,10 @@
 
 <script setup>
 
-import { showSuccess }
+import {
+    showSuccess,
+    showError
+}
 from '../utils/toast'
 
 import {
@@ -220,11 +218,16 @@ const cartOpen = ref(false)
 
 const payment = ref(0)
 
-const settings =
-    settingsService.getSettings()
+const settings = ref(null)
 
-    console.log('SETTINGS =', settings)
-console.log('STORE NAME =', settings?.storeName)
+onMounted(async () => {
+
+    await loadData()
+
+    settings.value =
+        await settingsService.getSettings()
+
+})
 
 const loadData = async () => {
 
@@ -235,8 +238,6 @@ const loadData = async () => {
         await categoryService.getAll()
 
 }
-
-onMounted(loadData)
 
 const filteredProducts = computed(() => {
 
@@ -284,6 +285,16 @@ const addToCart = (product) => {
     )
 
 if(exist){
+
+    if(exist.qty >= exist.stock){
+
+        showError(
+            'Stok tidak mencukupi'
+        )
+
+        return
+
+    }
 
     exist.qty++
 
@@ -372,13 +383,18 @@ const change = computed(() => {
 
 const printReceipt = (data) => {
 
-        console.log(
-        'Settings:',
-        settingsService.getSettings()
-    )
-
     const receiptWindow =
         window.open('', '_blank')
+
+        if(!receiptWindow){
+
+    showError(
+        'Popup diblokir browser'
+    )
+
+    return
+
+}
 
     receiptWindow.document.write(`
 
@@ -487,7 +503,7 @@ h2{
             <div class="store">
 
     <div class="store-name">
-        ${settings?.storeName || 'Kasir Modern'}
+        ${settings.value?.storeName || 'Kasir Modern'}
     </div>
 
     <div>
@@ -574,7 +590,7 @@ ${data.items.map((item,index) => `
 
     <br>
 
-    Selamat Berbelanja di ${settings?.storeName || 'Kasir Modern'}
+    Selamat Berbelanja di ${settings.value?.storeName || 'Kasir Modern'}
 
 </div>
 
@@ -594,9 +610,6 @@ const checkout = async () => {
 
     try {
 
-        console.log('Checkout dimulai')
-        console.log('Cart:', cart.value)
-
         if(cart.value.length === 0){
 
             showError('Keranjang kosong')
@@ -610,6 +623,29 @@ const checkout = async () => {
             return
 
         }
+
+for(const item of cart.value){
+
+    const product =
+        products.value.find(
+            p => p.id === item.id
+        )
+
+    if(
+        !product ||
+        product.stock < item.qty
+    ){
+
+        showError(
+            `${item.name} stok tidak mencukupi`
+        )
+
+        await loadData()
+
+        return
+    }
+
+}
 
         const profit = cart.value.reduce(
 
@@ -631,9 +667,8 @@ const checkout = async () => {
 
 )
 
-        const invoice = 'INV-' + Date.now()
-
-        console.log('Menyimpan transaksi...')
+const invoice =
+    `INV-${Date.now()}-${Math.floor(Math.random()*1000)}`
 
         await transactionService.create({
 
@@ -655,22 +690,46 @@ const checkout = async () => {
 
         })
 
-        console.log('Transaksi berhasil disimpan')
 
-        for(const item of cart.value){
 
-            const stockBaru =
-                item.stock - item.qty
+await loadData()
 
-            await productService.updateStock(
-                item.id,
-                stockBaru
+await Promise.all(
+
+    cart.value.map(async item => {
+
+        const latestProduct =
+            products.value.find(
+                p => p.id === item.id
+            )
+
+        if(!latestProduct){
+
+            throw new Error(
+                `Produk ${item.name} tidak ditemukan`
             )
 
         }
 
-        const cartSebelumKosong =
-    [...cart.value]
+        return productService.updateStock(
+
+            item.id,
+
+            Math.max(
+                0,
+                latestProduct.stock - item.qty
+            )
+
+        )
+
+    })
+
+)
+
+await loadData()
+
+
+
 
     const receiptData = {
 
@@ -694,13 +753,17 @@ const checkout = async () => {
 
         cartOpen.value = false
 
-        await loadData()
+showSuccess(
+    'Transaksi berhasil disimpan'
+)
 
-        if(
+if(
     confirm(
         'Transaksi berhasil.\n\nCetak struk sekarang?'
     )
-){
+)
+
+{
 
     printReceipt(receiptData)
 
@@ -899,9 +962,18 @@ const checkout = async () => {
 
     inset:0;
 
-    background:rgba(0,0,0,.5);
+    background:rgba(0,0,0,.7);
 
     z-index:9999;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:15px;
+
 }
 
 .cart-drawer{
@@ -913,7 +985,8 @@ const checkout = async () => {
 
     width:380px;
 
-    height:calc(100vh - 40px);
+    min-height:auto;
+height:auto;
 
     background:#111827;
 
@@ -1129,6 +1202,20 @@ const checkout = async () => {
             #0f172a,
             #ff00fb
         );
+
+}
+
+.cart-item strong{
+
+    display:block;
+
+    font-size:14px;
+
+    line-height:1.3;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
 
 }
 
@@ -1401,6 +1488,297 @@ const checkout = async () => {
         font-size:12px;
 
     }
+
+}
+
+@media (max-width:768px){
+
+    .cart-drawer{
+
+        position:fixed;
+
+        top:50%;
+        left:50%;
+
+        transform:translate(-50%, -50%);
+
+        width:95vw;
+
+        max-width:430px;
+
+        max-height:85vh;
+
+        overflow-y:auto;
+
+        padding:16px;
+
+        border-radius:24px;
+
+    }
+
+    .cart-item{
+
+        display:flex;
+
+        justify-content:space-between;
+
+        align-items:center;
+
+        gap:12px;
+
+        padding:14px;
+
+    }
+
+    .cart-item > div:first-child{
+
+        flex:1;
+
+        min-width:0;
+
+    }
+
+    .qty-box{
+
+        display:flex;
+
+        align-items:center;
+
+        gap:4px;
+
+    }
+
+    .qty-box button{
+
+        width:32px;
+
+        height:32px;
+
+        min-width:32px;
+
+        font-size:16px;
+
+        border-radius:8px;
+
+    }
+
+    .qty-box span{
+
+        min-width:16px;
+
+        font-size:14px;
+
+        text-align:center;
+
+    }
+
+    .remove-btn{
+
+        width:32px;
+
+        height:32px;
+
+        min-width:32px;
+
+        border-radius:8px;
+
+        font-size:12px;
+
+    }
+
+.cart-item strong{
+
+    display:block;
+
+    font-size:14px;
+
+    line-height:1.3;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+}
+
+    .cart-item p{
+
+        font-size:12px;
+
+    }
+
+    .summary{
+
+        margin-top:20px;
+
+        padding-top:15px;
+
+        border-top:1px solid rgba(255,255,255,.1);
+
+    }
+
+    .summary input{
+
+        width:100%;
+
+        height:52px;
+
+        background:#1f2937;
+
+        color:white;
+
+        border:1px solid #374151;
+
+        border-radius:12px;
+
+        padding:0 16px;
+
+        font-size:18px;
+
+        margin:15px 0;
+
+        box-sizing:border-box;
+
+    }
+
+    .summary input::placeholder{
+
+        color:#9ca3af;
+
+    }
+
+    .checkout-btn{
+
+        height:54px;
+
+        font-size:16px;
+
+        margin-top:10px;
+
+    }
+
+.qty-box{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+}
+
+.qty-box button{
+
+    width:38px;
+
+    height:38px;
+
+    min-width:38px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-size:18px;
+
+    cursor:pointer;
+
+}
+
+.qty-box span{
+
+    min-width:20px;
+
+    text-align:center;
+
+    color:white;
+
+    font-weight:600;
+
+}
+
+.remove-btn{
+
+    width:38px;
+
+    height:38px;
+
+    min-width:38px;
+
+    padding:0;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#ef4444;
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    cursor:pointer;
+
+}
+
+    .cart-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.7);
+
+    z-index:9999;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:15px;
+
+}
+
+.qty-box button,
+.remove-btn{
+
+    width:34px;
+    height:34px;
+
+}
+
+.qty-box span{
+
+    min-width:18px;
+    text-align:center;
+
+}
+
+}
+
+
+.floating-cart.hidden{
+    display:none;
+}
+
+.action-box{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    flex-shrink:0;
 
 }
 

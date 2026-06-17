@@ -8,10 +8,6 @@
             📂 Kategori
         </router-link>
 
-        <router-link to="/brand">
-            🏷 Brand
-        </router-link>
-
         <router-link to="/riwayat">
             🧾 Riwayat
         </router-link>

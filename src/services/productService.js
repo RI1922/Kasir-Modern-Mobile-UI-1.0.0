@@ -18,11 +18,19 @@ export const productService = {
         return await db.products.delete(id)
     },
 
-    async updateStock(id, stock) {
+async updateStock(id, stock) {
 
-    return await db.products.update(id, {
-        stock
-    })
+    const finalStock = Math.max(
+        0,
+        Number(stock) || 0
+    )
+
+    return await db.products.update(
+        id,
+        {
+            stock: finalStock
+        }
+    )
 
 }
 
