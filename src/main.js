@@ -51,6 +51,7 @@ db.open()
     )
 
 })
+
 .catch(err => {
 
     console.error(
@@ -59,3 +60,25 @@ db.open()
     )
 
 })
+
+window.onerror = function(
+    msg,
+    url,
+    line,
+    col,
+    error
+){
+
+    console.error(
+        'GLOBAL ERROR:',
+        msg,
+        error
+    )
+
+    alert(
+        msg +
+        '\nLine: ' +
+        line
+    )
+
+}
