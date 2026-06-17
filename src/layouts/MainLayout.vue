@@ -52,16 +52,25 @@ import {
 
 const isLandscapePhone = ref(false)
 
-const checkOrientation = () => {
+const isMobileDevice = () => {
 
-    const shortestSide = Math.min(
-        window.innerWidth,
-        window.innerHeight
+    return (
+        navigator.maxTouchPoints > 1 &&
+        window.innerWidth < 900
     )
 
+}
+
+const checkOrientation = () => {
+
     isLandscapePhone.value =
-        window.innerWidth > window.innerHeight &&
-        shortestSide < 600
+
+        isMobileDevice()
+
+        &&
+
+        window.innerWidth >
+        window.innerHeight
 
 }
 
@@ -119,7 +128,8 @@ const useMobileSidebar = computed(() => {
         screenHeight.value
     )
 
-    return shortestSide < 600
+    navigator.maxTouchPoints > 1 &&
+        screenWidth.value < 900
 
 })
 
