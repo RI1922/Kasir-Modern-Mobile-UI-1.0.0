@@ -52,44 +52,18 @@ import {
 
 const isLandscapePhone = ref(false)
 
-    console.log({
-        userAgent: navigator.userAgent,
-        width: window.innerWidth,
-        height: window.innerHeight,
-        touch: navigator.maxTouchPoints
-    })
-
 const checkOrientation = () => {
 
-    isLandscapePhone.value =
-
-        isMobileDevice()
-
-        &&
-
-        window.innerWidth >
+    const shortestSide = Math.min(
+        window.innerWidth,
         window.innerHeight
-
-}
-
-const checkOrientation = () => {
-
-    const isPhone =
-        window.matchMedia('(max-width: 768px)').matches
+    )
 
     isLandscapePhone.value =
-        isPhone &&
-        window.innerWidth > window.innerHeight
+        window.innerWidth > window.innerHeight &&
+        shortestSide < 600
 
 }
-
-const useMobileSidebar = computed(() => {
-
-    return window.matchMedia(
-        '(max-width: 768px)'
-    ).matches
-
-})
 
 import Sidebar from '../components/Sidebar.vue'
 import AppHeader from '../components/AppHeader.vue'
@@ -145,8 +119,7 @@ const useMobileSidebar = computed(() => {
         screenHeight.value
     )
 
-    navigator.maxTouchPoints > 1 &&
-        screenWidth.value < 900
+    return shortestSide < 600
 
 })
 
