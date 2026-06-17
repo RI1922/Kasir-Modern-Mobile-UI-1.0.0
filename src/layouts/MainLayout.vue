@@ -54,9 +54,8 @@ const isLandscapePhone = ref(false)
 
 const isMobileDevice = () => {
 
-    return (
-        navigator.maxTouchPoints > 1 &&
-        window.innerWidth < 900
+    return /Android|iPhone|iPod/i.test(
+        navigator.userAgent
     )
 
 }
