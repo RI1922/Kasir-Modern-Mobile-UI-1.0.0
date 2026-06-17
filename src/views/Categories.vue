@@ -203,7 +203,6 @@ const closeModal = () => {
 }
 
 const save = async () => {
-const save = async () => {
 
     alert('1')
 

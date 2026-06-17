@@ -7,10 +7,33 @@ export const categoryService = {
     },
 
     async create(name) {
-        return await db.categories.add({
-            name,
-            createdAt: new Date()
-        })
+
+        try {
+
+            alert('A')
+
+            const result = await db.categories.add({
+                name,
+                createdAt: new Date()
+            })
+
+            alert('B')
+
+            return result
+
+        } catch(err) {
+
+            alert(
+                err.name + '\n' +
+                err.message
+            )
+
+            console.error(err)
+
+            throw err
+
+        }
+
     },
 
     async update(id, name) {
