@@ -20,9 +20,9 @@ import 'vue3-toastify/dist/index.css'
 
 //import { seedTest } from './utils/testDb'
 
-//registerSW({
-//    immediate:true
-//})
+registerSW({
+    immediate:true
+})
 
 //seedTest()
 
@@ -39,6 +39,8 @@ inject()
 injectSpeedInsights()
 
 import db from './db/database'
+
+window.db = db
 
 db.open()
 .then(() => {
