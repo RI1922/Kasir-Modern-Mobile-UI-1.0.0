@@ -334,10 +334,6 @@ const loadData = async () => {
 
     })
 
-    alert(
-    JSON.stringify(products.value).length
-)
-
 }
 
 onMounted(loadData)

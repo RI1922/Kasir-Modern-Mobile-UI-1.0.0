@@ -40,8 +40,6 @@ injectSpeedInsights()
 
 import db from './db/database'
 
-window.db = db
-
 db.open()
 .then(() => {
 
@@ -75,12 +73,6 @@ window.onerror = function(
         'GLOBAL ERROR:',
         msg,
         error
-    )
-
-    alert(
-        msg +
-        '\nLine: ' +
-        line
     )
 
 }
