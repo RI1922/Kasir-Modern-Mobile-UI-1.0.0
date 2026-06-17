@@ -203,15 +203,25 @@ const closeModal = () => {
 }
 
 const save = async () => {
+const save = async () => {
 
     alert('1')
 
     if(!form.value.name){
-        alert('2')
         return
     }
 
     alert('3')
+
+    await categoryService.create(
+        form.value.name
+    )
+
+    alert('4')
+
+    await loadData()
+
+    alert('5')
 
 }
 
