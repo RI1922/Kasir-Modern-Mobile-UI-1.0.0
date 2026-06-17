@@ -204,31 +204,34 @@ const closeModal = () => {
 
 const save = async () => {
 
-    if(!form.value.name) return
+    try{
 
-    if(editMode.value){
+        if(!form.value.name) return
 
-        await categoryService.update(
+        if(editMode.value){
 
-            currentId.value,
+            await categoryService.update(
+                currentId.value,
+                form.value.name
+            )
 
-            form.value.name
+        }else{
 
-        )
+            await categoryService.create(
+                form.value.name
+            )
 
-    }else{
+        }
 
-        await categoryService.create(
+        await loadData()
 
-            form.value.name
+        closeModal()
 
-        )
+    }catch(err){
+
+        console.error(err)
 
     }
-
-    await loadData()
-
-    closeModal()
 
 }
 

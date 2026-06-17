@@ -20,9 +20,9 @@ import 'vue3-toastify/dist/index.css'
 
 //import { seedTest } from './utils/testDb'
 
-registerSW({
-    immediate:true
-})
+//registerSW({
+//    immediate:true
+//})
 
 //seedTest()
 
@@ -37,3 +37,25 @@ app.mount('#app')
 
 inject()
 injectSpeedInsights()
+
+import db from './db/database'
+
+db.open()
+.then(() => {
+
+    console.log(
+        'DB OK :',
+        db.tables.map(
+            t => t.name
+        )
+    )
+
+})
+.catch(err => {
+
+    console.error(
+        'DB ERROR :',
+        err
+    )
+
+})

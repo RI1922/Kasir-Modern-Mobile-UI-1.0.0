@@ -534,7 +534,23 @@ const restoreData = async (event) => {
 
 const resetData = async () => {
 
-    await backupService.reset()
+    const confirmReset = confirm(
+        'Yakin ingin menghapus seluruh data toko?'
+    )
+
+    if(!confirmReset){
+        return
+    }
+
+    try{
+
+        await backupService.reset()
+
+    }catch(error){
+
+        console.error(error)
+
+    }
 
 }
 

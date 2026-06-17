@@ -2,7 +2,7 @@ import Dexie from 'dexie'
 
 const db = new Dexie('KasirModernDB')
 
-db.version(1).stores({
+db.version(2).stores({
 
     categories: '++id,name,createdAt',
 
@@ -45,5 +45,7 @@ db.version(1).stores({
     `
 
 })
+
+
 
 export default db
