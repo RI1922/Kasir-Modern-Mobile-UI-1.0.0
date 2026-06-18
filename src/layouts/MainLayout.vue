@@ -1,18 +1,5 @@
 <template>
 
-<div
-    v-if="isLandscapePhone"
-    class="rotate-screen"
->
-    <div class="rotate-box">
-        📱
-        <br>
-        Silakan putar perangkat
-        <br>
-        ke mode portrait
-    </div>
-</div>
-
 <div class="layout">
 
 <Sidebar
@@ -52,22 +39,20 @@ import {
 
 const isLandscapePhone = ref(false)
 
-const isMobileDevice = () => {
+const checkOrientation = () => {
 
-    return (
-        navigator.maxTouchPoints > 1 &&
-        window.innerWidth < 1700
+ 
+
+    const shortestSide = Math.min(
+        window.innerWidth,
+        window.innerHeight
     )
 
-}
-
-const checkOrientation = () => {
+    const isPhone = shortestSide < 768
 
     isLandscapePhone.value =
 
-        isMobileDevice()
-
-        &&
+        isPhone &&
 
         window.innerWidth >
         window.innerHeight
@@ -225,12 +210,5 @@ const useMobileSidebar = computed(() => {
 
 }
 
-.rotate-box{
-
-    text-align:center;
-
-    line-height:1.6;
-
-}
 
 </style>
