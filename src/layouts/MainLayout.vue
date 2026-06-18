@@ -4,6 +4,14 @@
     v-if="isLandscapePhone"
     class="rotate-screen"
 >
+    <div class="rotate-box">
+        📱
+        <br>
+        Silakan putar perangkat
+        <br>
+        ke mode portrait
+    </div>
+</div>
 
 <div class="layout">
 
@@ -41,8 +49,6 @@ import {
     onMounted,
     onUnmounted
 } from 'vue'
-
-const isLandscapePhone = ref(false)
 
 const isLandscapePhone = ref(false)
 
