@@ -4,14 +4,6 @@
     v-if="isLandscapePhone"
     class="rotate-screen"
 >
-    <div class="rotate-box">
-        📱
-        <br><br>
-        Silakan putar perangkat
-        <br>
-        ke mode portrait
-    </div>
-</div>
 
 <div class="layout">
 
